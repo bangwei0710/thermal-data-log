@@ -56,12 +56,14 @@ if uploaded_files:
             elif file_type == "HW64":
                 df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip', quoting=3)
                 df = df.reset_index(drop=True)
-                if not pd.to_numeric(df.iloc[-1].dropna(), errors='coerce').notna().all():
-                    df = df.iloc[:-1]
+            if not pd.to_numeric(df.iloc[-1].dropna(), errors='coerce').notna().all():
+                df = df.iloc[:-1]
+                df.columns = df.columns.str.strip()
             else:
                 df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip')
                 df = df.reset_index(drop=True)
-
+                df.columns = df.columns.str.strip()
+    
             df.columns = df.columns.str.strip()
             all_dataframes[shortname] = df
             valid_dataframes.append((shortname, df))
