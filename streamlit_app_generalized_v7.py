@@ -54,8 +54,8 @@ if uploaded_files:
                 df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip')
                 df = df.iloc[5:].reset_index(drop=True)
             elif file_type == "HW64":
-                df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', skipfooter=2, on_bad_lines='skip')
-                df = df.iloc[5:-2].reset_index(drop=True)
+                df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip', quoting=3)
+                df = df.reset_index(drop=True)
             else:
                 df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip')
                 df = df.reset_index(drop=True)
