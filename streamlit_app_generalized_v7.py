@@ -53,8 +53,10 @@ if uploaded_files:
                 df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip')
                 df = df.iloc[5:].reset_index(drop=True)
             elif file_type == "HW64":
-                df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', skipfooter=2, on_bad_lines='skip')
-                df = df.iloc[:-2].reset_index(drop=True)
+                content = uploaded_file.getvalue().decode('cp950', errors='ignore')  # 只 decode 一次
+                lines = content.splitlines()
+                data_lines = lines[:-2]
+                df = pd.read_csv(StringIO("\n".join(data_lines)), engine='python')
             else:
                 df = pd.read_csv(uploaded_file, encoding='cp950', engine='python', on_bad_lines='skip')
                 df = df.reset_index(drop=True)
